@@ -5,12 +5,22 @@ class Graph:
 
     def __init__( self ):
         self.graph = {}
+        self.lastVertex = None
 
     def addVertex( self, vertexName ):
         if self.graph.get( vertexName ) != None:
             return False
-        self.graph[vertexName] = {}
+        self.graph[vertexName]  = {}
+        self.lastVertex         = vertexName
         return True
+
+    def removeVertex( self, vertexName ):
+        if self.graph.get( vertexName ) == None:
+            return False
+        del self.graph[vertexName]
+        if self.lastVertex == vertexName:
+            setOfVertex = tuple( self.graph )
+            self.lastVertex = setOfVertex[len(setOfVertex)-1]
 
     def desconnect( self, vertexA, vertexB ):
         if self.__existVertex( {vertexA,vertexB} ) == False:
@@ -31,16 +41,19 @@ class Graph:
             return False
         return len(self.graph[vertex])
 
-    def getListVertex( self ):
-        pass
+    def getRelationVertex( self ):
+        return self.graph
 
     def anyVertex( self ):
-        pass
+        return self.lastVertex
 
-    def related( self ):
-        pass
+    def related( self,vertex ):
+        if self.__existVertex( { vertex } ) == False:
+            return False
+        return self.graph[vertex]
 
-    def __existVertex( self, listVertex = {} ):
-        for v in listVertex:
+    def __existVertex( self, dictVertex = {} ):
+        for v in dictVertex:
             if self.graph.get( v, None ) == None:
                 return False
+        return True
