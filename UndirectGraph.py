@@ -26,3 +26,23 @@ class UndirectGraph( Graph ):
             if super().degree( v ) != ( totalVertex -1 ):
                 return False
         return True
+
+    def transitiveClosure( self,vertex ):
+        return self.__findTransitiveClosure( vertex,{} )
+
+    def __findTransitiveClosure( self, vertex, alreadyVisited ):
+        ft = alreadyVisited.copy()
+        print(len(ft))
+        print(type(ft))
+        alreadyVisited[vertex] = {}
+        print( "{} paremotro -  qremos pegar o fecho desse cara".format(vertex) )
+        for vertexRelated in self.related( vertex ):
+            print("{} vertice relacionado com o parametro {}".format( vertexRelated,vertex ))
+            if alreadyVisited.get( vertexRelated,None ) == None:
+                print("entrou recursao com vertice {}".format(vertexRelated))
+                test = self.__findTransitiveClosure( vertexRelated,alreadyVisited )
+                ft = ft.update( test )
+                print("mostra tipo de test de novo depois da recusao: {}".format(type(ft)))
+            print('---')
+        print("retorno {}".format(ft))
+        return ft
