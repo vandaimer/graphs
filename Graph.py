@@ -18,6 +18,11 @@ class Graph:
         if self.graph.get( vertexName ) == None:
             return False
         del self.graph[vertexName]
+        for vertex in self.graph:
+            for relatedVertex in self.related( vertex ):
+                if relatedVertex == vertexName:
+                    del self.graph[vertex][vertexName]
+                    break
         if self.lastVertex == vertexName:
             setOfVertex = tuple( self.graph )
             self.lastVertex = setOfVertex[len(setOfVertex)-1]
