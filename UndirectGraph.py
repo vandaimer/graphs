@@ -5,6 +5,12 @@ class UndirectGraph( Graph ):
     def __init__( self ):
         super( UndirectGraph,self ).__init__()
 
+    def connect( self, vertexA,vertexB ):
+        if super().connect( vertexA,vertexB ) == False:
+            return False
+        self.graph[vertexB][vertexA] = {}
+        return True
+
     def isRegular( self ):
         lastValue = 0
         for v in self.graph:
