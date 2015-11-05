@@ -9,7 +9,7 @@ class Graph:
     def addVertex( self, vertexName ):
         if self.graph.get( vertexName ) != None:
             return False
-        self.graph[vertexName] = None
+        self.graph[vertexName] = {}
         return True
 
     def desconnect( self, vertexA, vertexB ):
@@ -42,5 +42,5 @@ class Graph:
 
     def __existVertex( self, listVertex = {} ):
         for v in listVertex:
-            if self.graph.get( v ) == None:
+            if self.graph.get( v, None ) == None:
                 return False
