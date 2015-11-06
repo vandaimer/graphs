@@ -28,13 +28,13 @@ class Graph:
             self.lastVertex = setOfVertex[len(setOfVertex)-1]
 
     def desconnect( self, vertexA, vertexB ):
-        if self.__existVertex( {vertexA,vertexB} ) == False:
+        if self._existVertex( {vertexA,vertexB} ) == False:
             return False
         del self.graph[vertexA][vertexB]
         return True
 
     def connect( self, vertexA,vertexB ):
-        if self.__existVertex( {vertexA,vertexB} ) == False:
+        if self._existVertex( {vertexA,vertexB} ) == False:
             return False
         self.graph[vertexA][vertexB] = {}
 
@@ -42,7 +42,7 @@ class Graph:
         return len( self.graph )
 
     def degree( self,vertex ):
-        if self.__existVertex( {vertex} ) == False:
+        if self._existVertex( {vertex} ) == False:
             return False
         return len(self.graph[vertex])
 
@@ -53,11 +53,11 @@ class Graph:
         return self.lastVertex
 
     def related( self,vertex ):
-        if self.__existVertex( { vertex } ) == False:
+        if self._existVertex( { vertex } ) == False:
             return False
         return self.graph[vertex]
 
-    def __existVertex( self, dictVertex = {} ):
+    def _existVertex( self, dictVertex = {} ):
         for v in dictVertex:
             if self.graph.get( v, None ) == None:
                 return False
