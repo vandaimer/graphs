@@ -8,5 +8,4 @@ g.addVertex(4)
 
 g.connect(1,2)
 g.connect(2,3)
-g.connect(4,1)
-g.connect(4,2)
+g.connect(2,4)

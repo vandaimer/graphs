@@ -27,8 +27,32 @@ class UndirectGraph( Graph ):
                 return False
         return True
 
+    def isTree( self ):
+        anyVertex = self.anyVertex()
+        return self.isConnected() and not( self._hasCycle( anyVertex,anyVertex,None,{} ) )
+
+    def _hasCycle( self,v,vCurrent,vPrevious,alreadyVisited ):
+
+        if alreadyVisited.get( vCurrent,None ) != None:
+            vCurrent = v
+            return v
+        alreadyVisited[vCurrent] = {}
+        for vertexRelated in self.related( v ):
+            if vertexRelated != vPrevious:
+                if self._hasCycle( v,vertexRelated,vCurrent,alreadyVisited ):
+                    print(v,vertexRelated,vCurrent,alreadyVisited)
+                    return True
+        del alreadyVisited[vCurrent]
+        return False
+
+    def isConnected( self ):
+        for v in self.graph:
+            if self.degree( v ) == 0:
+                return False
+        return True
+
     def transitiveClosure( self,vertex ):
-        return self.__findTransitiveClosure( vertex,{} )
+        return self._findTransitiveClosure( vertex,{} )
 
     def __findTransitiveClosure( self, vertex, alreadyVisited ):
         ft = alreadyVisited.copy()
@@ -40,7 +64,7 @@ class UndirectGraph( Graph ):
             print("{} vertice relacionado com o parametro {}".format( vertexRelated,vertex ))
             if alreadyVisited.get( vertexRelated,None ) == None:
                 print("entrou recursao com vertice {}".format(vertexRelated))
-                test = self.__findTransitiveClosure( vertexRelated,alreadyVisited )
+                test = self._findTransitiveClosure( vertexRelated,alreadyVisited )
                 ft = ft.update( test )
                 print("mostra tipo de test de novo depois da recusao: {}".format(type(ft)))
             print('---')
