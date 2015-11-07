@@ -54,19 +54,10 @@ class UndirectGraph( Graph ):
     def transitiveClosure( self,vertex ):
         return self._findTransitiveClosure( vertex,{} )
 
-    def __findTransitiveClosure( self, vertex, alreadyVisited ):
+    def _findTransitiveClosure( self, vertex, alreadyVisited ):
         ft = alreadyVisited.copy()
-        print(len(ft))
-        print(type(ft))
         alreadyVisited[vertex] = {}
-        print( "{} paremotro -  qremos pegar o fecho desse cara".format(vertex) )
         for vertexRelated in self.related( vertex ):
-            print("{} vertice relacionado com o parametro {}".format( vertexRelated,vertex ))
             if alreadyVisited.get( vertexRelated,None ) == None:
-                print("entrou recursao com vertice {}".format(vertexRelated))
-                test = self._findTransitiveClosure( vertexRelated,alreadyVisited )
-                ft = ft.update( test )
-                print("mostra tipo de test de novo depois da recusao: {}".format(type(ft)))
-            print('---')
-        print("retorno {}".format(ft))
+                ft.update( self._findTransitiveClosure( vertexRelated,alreadyVisited ) )
         return ft
