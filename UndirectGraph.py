@@ -1,5 +1,4 @@
 from Graph import Graph
-
 class UndirectGraph( Graph ):
 
     def __init__( self ):
@@ -34,12 +33,12 @@ class UndirectGraph( Graph ):
     def _hasCycle( self,v,vCurrent,vPrevious,alreadyVisited ):
 
         if alreadyVisited.get( vCurrent,None ) != None:
-            vCurrent = v
-            return v
+            return vCurrent
         alreadyVisited[vCurrent] = {}
         for vertexRelated in self.related( v ):
             if vertexRelated != vPrevious:
                 if self._hasCycle( v,vertexRelated,vCurrent,alreadyVisited ):
+                    print('a')
                     print(v,vertexRelated,vCurrent,alreadyVisited)
                     return True
         del alreadyVisited[vCurrent]
@@ -55,8 +54,8 @@ class UndirectGraph( Graph ):
         return self._findTransitiveClosure( vertex,{} )
 
     def _findTransitiveClosure( self, vertex, alreadyVisited ):
-        ft = alreadyVisited.copy()
         alreadyVisited[vertex] = {}
+        ft = alreadyVisited.copy()
         for vertexRelated in self.related( vertex ):
             if alreadyVisited.get( vertexRelated,None ) == None:
                 ft.update( self._findTransitiveClosure( vertexRelated,alreadyVisited ) )
