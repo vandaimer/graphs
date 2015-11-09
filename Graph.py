@@ -33,10 +33,10 @@ class Graph:
         del self.graph[vertexA][vertexB]
         return True
 
-    def connect( self, vertexA,vertexB ):
+    def connect( self, vertexA,vertexB,label = None ):
         if self._existVertex( {vertexA,vertexB} ) == False:
             return False
-        self.graph[vertexA][vertexB] = {}
+        self.graph[vertexA][vertexB] = label
 
     def order( self ):
         return len( self.graph )

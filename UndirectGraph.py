@@ -4,10 +4,10 @@ class UndirectGraph( Graph ):
     def __init__( self ):
         super( UndirectGraph,self ).__init__()
 
-    def connect( self, vertexA,vertexB ):
-        if super().connect( vertexA,vertexB ) == False:
+    def connect( self, vertexA,vertexB,label = None ):
+        if super().connect( vertexA,vertexB,label ) == False:
             return False
-        self.graph[vertexB][vertexA] = {}
+        self.graph[vertexB][vertexA] = label
         return True
 
     def isRegular( self ):

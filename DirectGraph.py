@@ -22,10 +22,13 @@ class DirectGraph( Graph ):
             return False
         return self.reverseGraph[vertex]
 
-    def connect( self,vertexA,vertexB ):
-        if super().connect( vertexA,vertexB ) == False:
+    def connect( self,vertexA,vertexB,label = None ):
+        if super().connect( vertexA,vertexB,label ) == False:
             return False
-        self.reverseGraph[vertexB][vertexA] = {}
+
+        #Na linha abaixo não é necessário atribuir a label, pois o reseverGraph
+        # é apenas para garantir O(1) em algumas operações
+        self.reverseGraph[vertexB][vertexA] = None
         return True
 
     def degreeOfEmission( self,vertex ):
