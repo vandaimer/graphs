@@ -10,6 +10,7 @@ class UndirectGraph( Graph ):
         self.graph[vertexB][vertexA] = label
         return True
 
+    # verifica se o grafo é regular
     def isRegular( self ):
         lastValue = 0
         for v in self.graph:
@@ -19,6 +20,7 @@ class UndirectGraph( Graph ):
                 return False
         return True
 
+    # verifica se o grafo é completo
     def isComplete( self ):
         totalVertex = len( self.graph )
         for v in self.graph:
@@ -26,10 +28,12 @@ class UndirectGraph( Graph ):
                 return False
         return True
 
+    #verifica se o grafo é uma arvore
     def isTree( self ):
         anyVertex = self.anyVertex()
         return self.isConnected() and not( self._hasCycle( anyVertex,anyVertex,None,{} ) )
 
+    #verifica se o grafo tem ciclos
     def _hasCycle( self,v,vCurrent,vPrevious,alreadyVisited ):
 
         if alreadyVisited.get( vCurrent,None ) != None:
@@ -44,14 +48,16 @@ class UndirectGraph( Graph ):
         del alreadyVisited[vCurrent]
         return False
 
+    #verifica se o grafo é conexo TEM ERRO
     def isConnected( self ):
         for v in self.graph:
             if self.degree( v ) == 0:
                 return False
         return True
 
+    #retorna fecho transitivo de um vertice
     def transitiveClosure( self,vertex ):
-        return self._findTransitiveClosure( vertex,{} )
+        return self.isConnected() and self._findTransitiveClosure( vertex,{} )
 
     def _findTransitiveClosure( self, vertex, alreadyVisited ):
         alreadyVisited[vertex] = {}
