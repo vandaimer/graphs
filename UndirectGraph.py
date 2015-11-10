@@ -14,15 +14,15 @@ class UndirectGraph( Graph ):
         lastValue = 0
         for v in self.graph:
             if lastValue == 0:
-                lastValue = super().degree( v )
-            elif lastValue != super().degree( v ):
+                lastValue = self.degree( v )
+            elif lastValue != self.degree( v ):
                 return False
         return True
 
     def isComplete( self ):
         totalVertex = len( self.graph )
         for v in self.graph:
-            if super().degree( v ) != ( totalVertex -1 ):
+            if self.degree( v ) != ( totalVertex -1 ):
                 return False
         return True
 
