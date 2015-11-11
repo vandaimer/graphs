@@ -12,11 +12,13 @@ class DirectGraph( Graph ):
         self.reverseGraph[vertexName] = {}
         return True
 
+    #retorna os sucessores de um vertice
     def getSuccessors( self,vertex ):
         if self._existVertex( {vertex} ) == None:
             return False
         return self.graph[vertex]
 
+    #retorna os antecessores de um vertice
     def getPredecessors( self,vertex ):
         if self.reverseGraph.get( vertex,None ) == None:
             return False
@@ -31,11 +33,13 @@ class DirectGraph( Graph ):
         self.reverseGraph[vertexB][vertexA] = None
         return True
 
+    #retorna o grau de emissão de um vertice
     def degreeOfEmission( self,vertex ):
         if self._existVertex( {vertex} ) == False:
             return False
         return self.degree( vertex )
 
+    #retorna o grau de recepção de um vertice
     def degreeOfReception( self,vertex ):
         if self._existVertex( {vertex} ) == False:
             return False
@@ -50,4 +54,3 @@ class DirectGraph( Graph ):
                 if relatedVertex == vertexChosen:
                     del self.reverseGraph[vertex][vertexChosen]
                     break
-
