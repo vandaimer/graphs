@@ -42,18 +42,13 @@ class UndirectGraph( Graph ):
         for vertexRelated in self.related( v ):
             if vertexRelated != vPrevious:
                 if self._hasCycle( v,vertexRelated,vCurrent,alreadyVisited ):
-                    print('a')
-                    print(v,vertexRelated,vCurrent,alreadyVisited)
                     return True
         del alreadyVisited[vCurrent]
         return False
 
-    #verifica se o grafo é conexo TEM ERRO
+    #verifica se o grafo é conexo
     def isConnected( self ):
-        for v in self.graph:
-            if self.degree( v ) == 0:
-                return False
-        return True
+        return self.getRelationVertex() == self._findTransitiveClosure( self.anyVertex(),{} ).keys()
 
     #retorna fecho transitivo de um vertice
     def transitiveClosure( self,vertex ):
