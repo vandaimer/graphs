@@ -6,6 +6,29 @@ class DirectGraph( Graph ):
         super( DirectGraph,self ).__init__()
         self.reverseGraph = {}
 
+    def topologicalOrdering( self ):
+        base = []
+        listOfVertex = []
+        setStampedVertex = set()
+
+        for vertex in self.graph:
+            if not self.getPredecessors( vertex ):
+                base.append( vertex )
+
+        for baseVertex in base:
+            self._addTopolicalOrderingList( baseVertex, listOfVertex, setStampedVertex )
+
+        listOfVertex.reverse()
+        return listOfVertex
+
+    def _addTopolicalOrderingList( self, vertex, listOfVertex, setVlistOfVertex ):
+        for sucessor in self.getSuccessors(vertex):
+            if not sucessor in setVlistOfVertex:
+                setVlistOfVertex.add(sucessor)
+                self._addTopolicalOrderingList( sucessor, listOfVertex, setVlistOfVertex )
+        # listOfVertex = [vertex] + listOfVertex
+        listOfVertex.append(vertex)
+
     def addVertex( self,vertexName ):
         if super().addVertex( vertexName ) == False:
             return False
