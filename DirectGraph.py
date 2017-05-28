@@ -3,7 +3,7 @@ from Graph import Graph
 class DirectGraph( Graph ):
 
     def __init__( self ):
-        super( DirectGraph,self ).__init__()
+        super( DirectGraph, self ).__init__()
         self.reverseGraph = {}
 
     def topologicalOrdering( self ):
@@ -26,11 +26,10 @@ class DirectGraph( Graph ):
             if not sucessor in setVlistOfVertex:
                 setVlistOfVertex.add(sucessor)
                 self._addTopolicalOrderingList( sucessor, listOfVertex, setVlistOfVertex )
-        # listOfVertex = [vertex] + listOfVertex
         listOfVertex.append(vertex)
 
-    def addVertex( self,vertexName ):
-        if super().addVertex( vertexName ) == False:
+    def addVertex( self,vertexName, attrs={} ):
+        if super( DirectGraph, self ).addVertex( vertexName, attrs ) == False:
             return False
         self.reverseGraph[vertexName] = {}
         return True
