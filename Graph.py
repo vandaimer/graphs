@@ -5,13 +5,15 @@ class Graph:
 
     def __init__( self ):
         self.graph = {}
+        self.attrs = {}
         self.lastVertex = None
 
     #adiciona um vértice, se o vertice já existe, retorna falso
-    def addVertex( self, vertexName ):
+    def addVertex( self, vertexName, attrs={}):
         if self._existVertex( {vertexName} ) != False:
             return False
         self.graph[vertexName]  = {}
+        self.attrs[vertexName]  = attrs
         self.lastVertex         = vertexName
         return True
 
