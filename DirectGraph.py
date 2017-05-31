@@ -7,13 +7,10 @@ class DirectGraph( Graph ):
         self.reverseGraph = {}
 
     def topologicalOrdering( self ):
-        base = []
         listOfVertex = []
         setStampedVertex = set()
 
-        for vertex in self.graph:
-            if not self.getPredecessors( vertex ):
-                base.append( vertex )
+        base = self.getBase()
 
         for baseVertex in base:
             self._addTopolicalOrderingList( baseVertex, listOfVertex, setStampedVertex )
@@ -33,6 +30,13 @@ class DirectGraph( Graph ):
             return False
         self.reverseGraph[vertexName] = {}
         return True
+
+    def getBase( self ):
+        base = []
+        for vertex in self.graph:
+            if not self.getPredecessors( vertex ):
+                base.append( vertex )
+        return base
 
     #retorna os sucessores de um vertice
     def getSuccessors( self,vertex ):
