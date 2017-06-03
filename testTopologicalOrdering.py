@@ -1,8 +1,10 @@
 from DirectGraph import DirectGraph
 from collections import OrderedDict
 from pprint import pprint
-from sys import exit
 
+"""
+    Definição do Grafo usando a biblioteca implementada
+"""
 
 g = DirectGraph()
 g.addVertex("Grafos", {'credito':4})
@@ -33,6 +35,17 @@ g.connect("Formais", "Compiladores")
 semestres = {}
 semestre = 0
 creditos = 0
+"""
+    Está função percore cada disciplinas (base ou nao)
+    E define qual semestre ela pertence, a partir do nº
+    de créditos que cada disciplina tem.
+
+    Eu usei a ideia do algoritmo dos escaninhos. Não necessáriamente está
+    implementada da melhor forma.
+
+    Em um caso que uma disciplina não base pode estar junto com uma disciplina
+    base, o algoritmo não faz o uso dessa possibilidade.
+"""
 def proxSemestres(disciplinas):
     global creditos
     global semestre
