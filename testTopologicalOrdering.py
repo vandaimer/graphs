@@ -5,20 +5,20 @@ from sys import exit
 
 
 g = DirectGraph()
-g.addVertex("Grafos", {'c':4})
-g.addVertex("IA", {'c':4})
-g.addVertex("SOI", {'c':4})
-g.addVertex("SOII", {'c':4})
-g.addVertex("Distribuida", {'c':4})
-g.addVertex("Calc A", {'c':4})
-g.addVertex("Calc B", {'c':4})
-g.addVertex("Calc nº", {'c':4})
-g.addVertex("Estatística", {'c':4})
-g.addVertex("GA", {'c':4})
-g.addVertex("AL", {'c':4})
-g.addVertex("Segurança", {'c':4})
-g.addVertex("Formais", {'c':4})
-g.addVertex("Compiladores", {'c':4})
+g.addVertex("Grafos", {'credito':4})
+g.addVertex("IA", {'credito':4})
+g.addVertex("SOI", {'credito':4})
+g.addVertex("SOII", {'credito':4})
+g.addVertex("Distribuida", {'credito':4})
+g.addVertex("Calc A", {'credito':4})
+g.addVertex("Calc B", {'credito':4})
+g.addVertex("Calc nº", {'credito':4})
+g.addVertex("Estatística", {'credito':4})
+g.addVertex("GA", {'credito':4})
+g.addVertex("AL", {'credito':4})
+g.addVertex("Segurança", {'credito':4})
+g.addVertex("Formais", {'credito':4})
+g.addVertex("Compiladores", {'credito':4})
 
 g.connect("GA", "AL")
 g.connect("Calc A", "Calc B")
@@ -30,31 +30,31 @@ g.connect("Grafos", "IA")
 g.connect("Formais", "Compiladores")
 
 
-potes = {}
-pote = 0
+semestres = {}
+semestre = 0
 creditos = 0
 def proxSemestres(disciplinas):
     global creditos
-    global pote
-    global potes
+    global semestre
+    global semestres
 
-    for b in disciplinas:
-        credito = g.attrs[b]['c']
+    for disc in disciplinas:
+        credito = g.attrs[disc]['credito']
         if (creditos+credito) <= 28:
-            if not potes.get(pote):
-                potes[pote] = {'total_creditos': 0, 'disciplinas': []}
-            potes[pote]['disciplinas'].append(b)
+            if not semestres.get(semestre):
+                semestres[semestre] = {'total_creditos': 0, 'disciplinas': []}
+            semestres[semestre]['disciplinas'].append(disc)
         else:
-            potes[pote]['total_creditos'] = creditos
-            pote += 1
-            potes[pote] = {'total_creditos': 0, 'disciplinas': []}
-            potes[pote]['disciplinas'].append(b)
+            semestres[semestre]['total_creditos'] = creditos
+            semestre += 1
+            semestres[semestre] = {'total_creditos': 0, 'disciplinas': []}
+            semestres[semestre]['disciplinas'].append(disc)
             creditos = 0
         creditos += credito
 
-    potes[pote]['total_creditos'] = creditos
+    semestres[semestre]['total_creditos'] = creditos
     creditos = 0
-    pote += 1
+    semestre += 1
 
 
 # Obtem a ordenação topológica
@@ -67,11 +67,11 @@ ordering = g.topologicalOrdering()
 
     Ordenar a base faz parte da resolução, é NECESSÁRIO ordernar
 """
-base = sorted(g.getBase(), key=lambda b: g.attrs[b]['c'])
+base = sorted(g.getBase(), key=lambda disc: g.attrs[disc]['credito'])
 # Obtem as outras disciplinas que não fazem parter da base
-others = [x for x in ordering if x not in base]
+disciplinas_nao_base = [x for x in ordering if x not in base]
 # Executa o algoritmo para a base, primeiramente
 proxSemestres(base)
 # Execute o algoritmo para as outras disciplinas
-proxSemestres(others)
-pprint(potes)
+proxSemestres(disciplinas_nao_base)
+pprint(semestres)
