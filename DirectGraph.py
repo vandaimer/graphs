@@ -7,6 +7,11 @@ class DirectGraph( Graph ):
         self.reverseGraph = {}
 
     def topologicalOrdering( self ):
+        anyVertex = self.anyVertex()
+        hasCircuit = self._hasCircuit(anyVertex, anyVertex, None, set())
+        if hasCircuit:
+            raise Exception("The Graph has circuit. Not is possible get the Topolical Ordering.")
+
         listOfVertex = []
         setStampedVertex = set()
 
@@ -24,6 +29,17 @@ class DirectGraph( Graph ):
                 setVlistOfVertex.add(sucessor)
                 self._addTopolicalOrderingList( sucessor, listOfVertex, setVlistOfVertex )
         listOfVertex.append(vertex)
+
+    def _hasCircuit(self,v,vCurrent,vPrevious,alreadyVisited):
+        if vCurrent in alreadyVisited:
+            return vCurrent
+        alreadyVisited.add(vCurrent)
+        for vertexRelated in self.getSuccessors(v):
+            if vertexRelated != vPrevious:
+                if self._hasCircuit( v,vertexRelated,vCurrent,alreadyVisited ):
+                    return True
+        alreadyVisited.discard(vCurrent)
+        return False
 
     def addVertex( self,vertexName, attrs={} ):
         if super( DirectGraph, self ).addVertex( vertexName, attrs ) == False:
