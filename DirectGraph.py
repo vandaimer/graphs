@@ -13,21 +13,19 @@ class DirectGraph( Graph ):
             raise Exception("The Graph has circuit. Not is possible get the Topolical Ordering.")
 
         listOfVertex = []
-        setStampedVertex = set()
-
         base = self.getBase()
 
         for baseVertex in base:
-            self._addTopolicalOrderingList( baseVertex, listOfVertex, setStampedVertex )
+            self._getTopolicalOrderingList( baseVertex, listOfVertex, set() )
 
         listOfVertex.reverse()
         return listOfVertex
 
-    def _addTopolicalOrderingList( self, vertex, listOfVertex, setVlistOfVertex ):
+    def _getTopolicalOrderingList( self, vertex, listOfVertex, setVlistOfVertex ):
         for sucessor in self.getSuccessors(vertex):
             if not sucessor in setVlistOfVertex:
                 setVlistOfVertex.add(sucessor)
-                self._addTopolicalOrderingList( sucessor, listOfVertex, setVlistOfVertex )
+                self._getTopolicalOrderingList( sucessor, listOfVertex, setVlistOfVertex )
         listOfVertex.append(vertex)
 
     def _hasCircuit(self,v,vCurrent,vPrevious,alreadyVisited):
